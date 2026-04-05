@@ -87,8 +87,6 @@ L'aplicació inclou també un panell d'administració per gestionar productes, c
 
 </pre>
 
-<br>
-
 <h4 style="color: #a08e7b;">
   Esquema Visual
 </h4>
