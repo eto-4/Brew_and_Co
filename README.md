@@ -89,15 +89,6 @@ L'aplicació inclou també un panell d'administració per gestionar productes, c
 
 <br>
 
-<blockquote>
-<b style="color:#4fc3f7;">Blau</b> → Relació amb <b>usuaris</b><br>
-<b style="color:#81c784;">Verd</b> → Relació amb <b>categories</b><br>
-<b style="color:#ffb74d;">Taronja</b> → Relació amb <b>productes</b><br>
-<b style="color:#ba68c8;">Lila</b> → Relació amb <b>adreces</b><br>
-<b style="color:#e57373;">Vermell</b> → Relació amb <b>comandes</b><br>
-<b style="color:#ffd54f;">Groc</b> → Relació amb <b>codis_descompte</b>
-</blockquote>
-
 <h4 style="color: #a08e7b;">
   Esquema Visual
 </h4>
