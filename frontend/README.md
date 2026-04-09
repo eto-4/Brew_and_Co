@@ -1,49 +1,49 @@
 # ☕ Brew & Co. — Frontend
 
-Frontend de la aplicación web **Brew & Co.**, una plataforma digital para una cafetería moderna donde los usuarios pueden consultar productos, realizar pedidos y hacer seguimiento en tiempo real.
+Frontend de l'aplicació web **Brew & Co.**, una plataforma digital per a una cafeteria moderna on els usuaris poden consultar productes, fer comandes i fer el seguiment en temps real.
 
 ---
 
-## 🚀 Tecnologías utilizadas
+## 🚀 Tecnologies utilitzades
 
-* **React** → Librería principal de frontend
-* **Vite** → Entorno de desarrollo y build
-* **Tailwind CSS** → Estilado rápido y responsive
-* **React Router DOM** → Navegación entre páginas
-* **Fetch API / Axios (opcional)** → Comunicación con backend
-* **Laravel (backend)** → API REST (separado)
+* **React** → Llibreria principal de frontend
+* **Vite** → Entorn de desenvolupament i build
+* **Tailwind CSS** → Estilització ràpida i responsive
+* **React Router DOM** → Navegació entre pàgines
+* **Fetch API / Axios (opcional)** → Comunicació amb backend
+* **Laravel (backend)** → API REST (separat)
 
 ---
 
-## 📁 Estructura del proyecto
+## 📁 Estructura del projecte
 
 ```
 src/
-├── api/           # Comunicación con backend
-├── components/    # Componentes reutilizables
-├── pages/         # Vistas principales (Home, Catalog, etc.)
-├── layouts/       # Estructura de páginas
-├── context/       # Estado global (auth, carrito...)
-├── hooks/         # Hooks personalizados
-├── router/        # Configuración de rutas
-├── styles/        # Estilos (ui.js + animaciones)
-│   ├── ui.js
-│   ├── animations.css
+├── api/              # Comunicació amb backend
+├── components/       # Components reutilitzables
+├── pages/            # Vistes principals (Home, Catalog, etc.)
+├── layouts/          # Estructura de pàgines
+├── context/          # Estat global (auth, carretó...)
+├── hooks/            # Hooks personalitzats
+├── router/           # Configuració de rutes
+├── styles/           # Estils (ui.js + animacions)
+│ ├── ui.js
+│ ├── animations.css
 ├── App.jsx
 ├── main.jsx
 ```
 
 ---
 
-## 🎨 Sistema de estilos
+## 🎨 Sistema d'estils
 
-El proyecto utiliza un enfoque híbrido:
+El projecte utilitza un enfocament híbrid:
 
-* **Tailwind CSS** → Layout y estilos base
-* **Mapa de estilos (`ui.js`)** → Reutilización y limpieza del JSX
-* **CSS global** → Animaciones (`animations.css`)
+* **Tailwind CSS** → Maquetació i estils base
+* **Mapa d'estils (`ui.js`)** → Reutilització i neteja del JSX
+* **CSS global** → Animacions (`animations.css`)
 
-Ejemplo:
+Exemple:
 
 ```jsx
 className={`${ui.button.base} ${ui.button.primary}`}
@@ -51,36 +51,36 @@ className={`${ui.button.base} ${ui.button.primary}`}
 
 ---
 
-## 🔌 Comunicación con backend
+## 🔌 Comunicació amb backend
 
-El frontend consume una API REST desarrollada en Laravel.
+El frontend fa servir una API REST desenvolupada amb Laravel.
 
-Ejemplo de petición:
+Exemple de petició:
 
 ```js
 fetch("http://localhost:8000/api/productes")
 ```
 
-Las respuestas se manejan en formato JSON.
+Les respostes es gestionen en format JSON.
 
 ---
 
-## ⚙️ Instalación
+## ⚙️ Instal·lació
 
-1. Clonar el repositorio:
+1. Clonar el repositori:
 
 ```bash
 git clone <repo-url>
 cd frontend
 ```
 
-2. Instalar dependencias:
+2. Instal·lar dependències:
 
 ```bash
 npm install
 ```
 
-3. Ejecutar en desarrollo:
+3. Executar en desenvolupament:
 
 ```bash
 npm run dev
@@ -88,9 +88,9 @@ npm run dev
 
 ---
 
-## 🌐 Variables de entorno
+## 🌐 Variables d'entorn
 
-Crear un archivo `.env` si es necesario:
+Crear un fitxer `.env` si és necessari:
 
 ```
 VITE_API_URL=http://localhost:8000/api
@@ -98,57 +98,33 @@ VITE_API_URL=http://localhost:8000/api
 
 ---
 
-## 🧩 Funcionalidades principales
+## 🧩 Funcionalitats principals
 
-* Página principal pública
-* Autenticación (login / registro)
-* Catálogo de productos
-* Carrito de compra
-* Creación de pedidos
-* Seguimiento en tiempo real
-* Panel de administración
+* Pàgina principal pública
+* Autenticació (inici de sessió / registre)
+* Catàleg de productes
+* Carretó de compra
+* Creació de comandes
+* Seguiment en temps real
+* Panell d'administració
 
 ---
 
 ## 🧠 Arquitectura
 
-* **Frontend desacoplado** del backend
-* Comunicación mediante **API REST**
-* Separación clara de responsabilidades:
+* **Frontend desacoblat** del backend
+* Comunicació mitjançant **API REST**
+* Separació clara de responsabilitats:
 
-  * Frontend → UI, estado, navegación
-  * Backend → lógica, base de datos, seguridad
+  * Frontend → UI, estat, navegació
+  * Backend → lògica, base de dades, seguretat
 
 ---
 
-## 📦 Build para producción
+## 📦 Build per a producció
 
 ```bash
 npm run build
 ```
 
-Genera la carpeta `dist/` lista para deploy.
-
----
-
-## 🐳 Docker (opcional)
-
-El proyecto está preparado para integrarse en un entorno Docker junto al backend Laravel.
-
----
-
-## 👨‍💻 Autor
-
-Proyecto desarrollado como trabajo final de curso.
-
----
-
-## 📌 Notas
-
-* No incluir `node_modules` en la entrega
-* El proyecto debe ser ejecutable con:
-
-  ```
-  npm install
-  npm run dev
-  ```
+Genera la carpeta `dist/` preparada per a desplegament.
