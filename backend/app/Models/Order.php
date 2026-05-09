@@ -25,7 +25,7 @@ class Order extends Model
 
     public function adreca()
     {
-        return $this->belongsTo(Adreca::class, 'adreca_id');
+        return $this->belongsTo(Address::class, 'adreca_id');
     }
 
     public function orderLines()

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 
 // Rutes públicas
@@ -32,6 +33,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'store']);
     Route::put('/orders/{order}', [OrderController::class, 'update']);
     Route::delete('/orders/{order}', [OrderController::class, 'cancel']);
+    
+    // Rutes de modificacio de direcció
+    Route::get('/user/adresses', [AddressController::class, 'index']);
+    Route::post('/user/adresses', [AddressController::class, 'store']);
+    Route::put('/user/adresses/{adreca}', [AddressController::class, 'update']);
+    Route::delete('/user/adresses/{adreca}', [AddressController::class, 'destroy']);
+    Route::patch('/user/adresses/{adreca}/predeterminada', [AddressController::class, 'setPredeterminada']);
 
     // Rutes que requereixen ser admin:
     Route::middleware('is_admin')->group(function () {

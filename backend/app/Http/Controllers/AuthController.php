@@ -47,17 +47,4 @@ class AuthController extends Controller
             'message' => 'Sessió tancada correctament.',
         ]);
     }
-
-    public function profile(): JsonResponse
-    {
-        return response()->json(Auth::user());
-    }
-
-    public function updateProfile(RegisterRequest $request): JsonResponse
-    {
-        $user = Auth::user();
-        $user->update($request->validated());
-
-        return response()->json($user);
-    }
 }
