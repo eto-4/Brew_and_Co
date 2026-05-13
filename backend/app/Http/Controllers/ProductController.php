@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Models\Product;
 
-class ProductController implements Controller 
+class ProductController extends Controller
 {
     public function index(): JsonResponse
     {
@@ -25,5 +26,11 @@ class ProductController implements Controller
             'disponible' => !$product->disponible,
         ]);
         return response()->json($product);
+    }
+
+    public function categories(): JsonResponse
+    {
+        $categories = Category::where('activa', true)->get();
+        return response()->json($categories);
     }
 }
