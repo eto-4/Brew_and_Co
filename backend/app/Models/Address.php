@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
+    protected $table = 'adreces';
+
     protected $fillable = [
         'etiqueta',
         'adreca',

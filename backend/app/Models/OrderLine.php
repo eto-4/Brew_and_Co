@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderLine extends Model
 {
+    protected $table = 'linies_comanda';
+
     protected $fillable = [
         'comanda_id',
         'producte_id',

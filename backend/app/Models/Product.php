@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $table = 'productes';
+
     protected $fillable = [
         'nom',
         'descripcio',
@@ -25,13 +27,18 @@ class Product extends Model
         ];
     }
 
-    public function offer()
+    public function offers()
     {
-        return $this->hasOne(Offer::class);
+        return $this->belongsToMany(Offer::class, 'producte_oferta', 'producte_id', 'oferta_id');
     }
 
     public function orderLines()
     {
-        return $this->hasMany(OrderLine::class);
+        return $this->hasMany(OrderLine::class, 'producte_id');
+    }
+    
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'categoria_producte', 'producte_id', 'categoria_id');
     }
 }

@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
+    protected $table = 'usuaris';
+
     protected $fillable = [
         'nom',
         'email',
@@ -36,7 +38,7 @@ class User extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'usuari_id');
     }
 
     public function adreces()

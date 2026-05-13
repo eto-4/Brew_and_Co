@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $table = 'comandes';
+
     protected $fillable = [
         'adreca_id',
         'estat',
+        'temps_estimat',
+        'missatge',
         'total',
     ];
     protected function casts(): array 
     {
         return [
+            'temps_estimat' => 'datetime',
             'total' => 'decimal:2',
         ];
     }
@@ -30,11 +35,11 @@ class Order extends Model
 
     public function orderLines()
     {
-        return $this->hasMany(OrderLine::class);    
+        return $this->hasMany(OrderLine::class, 'comanda_id');    
     }
 
     public function payments()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class, 'comanda_id');
     }
 }
