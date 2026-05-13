@@ -33,7 +33,7 @@ L'aplicació inclou també un panell d'administració per gestionar productes, c
     <tr style="background-color: #d4d4d433;">
       <td>Frontend</td>
       <td>React</td>
-      <td>Modern i àmpliament utilitzat</td>
+      <td>Modern i Estructurat</td>
     </tr>
     <tr>
       <td>Estils</td>
@@ -67,23 +67,27 @@ L'aplicació inclou també un panell d'administració per gestionar productes, c
 
 <pre style="line-height: 1.6;">
 
-<div><strong style="color: #c08a4d;">usuaris</strong> — id, nom, email, contrasenya, rol, created_at</div>
+<div><strong style="color: #c08a4d;">usuaris</strong> — id, nom, email, password, rol, remember_token, created_at, updated_at</div>
 
-<div><strong style="color: #c08a4d;">adreces</strong> — id, <span style="color:#4fc3f7;">usuari_id</span>, etiqueta, adreça, codi_postal, ciutat, predeterminada, created_at</div>
+<div><strong style="color: #c08a4d;">adreces</strong> — id, <span style="color:#4fc3f7;">usuari_id</span>, etiqueta, adreça, codi_postal, ciutat, predeterminada, created_at, updated_at</div>
 
-<div><strong style="color: #c08a4d;">categories</strong> — id, nom, descripcio, activa</div>
+<div><strong style="color: #c08a4d;">categories</strong> — id, nom, descripcio, activa, created_at, updated_at</div>
 
-<div><strong style="color: #c08a4d;">productes</strong> — id, <span style="color:#81c784;">categoria_id</span>, nom, descripcio, preu, imatge, disponible, destacat</div>
+<div><strong style="color: #c08a4d;">productes</strong> — id, nom, descripcio, preu, imatge, disponible, destacat, created_at, updated_at</div>
 
-<div><strong style="color: #c08a4d;">ofertes</strong> — id, <span style="color:#ffb74d;">producte_id</span>, preu_rebaixat, data_inici, data_fi</div>
+<div><strong style="color: #c08a4d;">categoria_producte</strong> — <span style="color:#81c784;">categoria_id</span>, <span style="color:#ffb74d;">producte_id</span> (taula pivot)</div>
 
-<div><strong style="color: #c08a4d;">codis_descompte</strong> — id, codi, percentatge, actiu, expires_at</div>
+<div><strong style="color: #c08a4d;">ofertes</strong> — id, preu_rebaixat, data_inici, data_fi, created_at, updated_at</div>
 
-<div><strong style="color: #c08a4d;">comandes</strong> — id, <span style="color:#4fc3f7;">usuari_id</span>, <span style="color:#ba68c8;">adreca_id</span>, estat, total, created_at</div>
+<div><strong style="color: #c08a4d;">producte_oferta</strong> — <span style="color:#81c784;">producte_id</span>, <span style="color:#ffb74d;">oferta_id</span> (taula pivot)</div>
 
-<div><strong style="color: #c08a4d;">linies_comanda</strong> — id, <span style="color:#e57373;">comanda_id</span>, <span style="color:#ffb74d;">producte_id</span>, quantitat, preu_unitari</div>
+<div><strong style="color: #c08a4d;">codis_descompte</strong> — id, codi, percentatge, actiu, expires_at, created_at, updated_at</div>
 
-<div><strong style="color: #c08a4d;">pagaments</strong> — id, <span style="color:#e57373;">comanda_id</span>, metode, estat, <span style="color:#ffd54f;">codi_descompte_id</span> (nullable), created_at</div>
+<div><strong style="color: #c08a4d;">comandes</strong> — id, <span style="color:#4fc3f7;">usuari_id</span>, <span style="color:#ba68c8;">adreca_id</span>, temps_estimat, missatge, estat, total, created_at, updated_at</div>
+
+<div><strong style="color: #c08a4d;">linies_comanda</strong> — id, <span style="color:#e57373;">comanda_id</span>, <span style="color:#ffb74d;">producte_id</span>, quantitat, preu_unitari, created_at, updated_at</div>
+
+<div><strong style="color: #c08a4d;">pagaments</strong> — id, <span style="color:#e57373;">comanda_id</span>, metode, estat, descripcio, <span style="color:#ffd54f;">codi_descompte_id</span> (nullable), created_at, updated_at</div>
 
 </pre>
 
