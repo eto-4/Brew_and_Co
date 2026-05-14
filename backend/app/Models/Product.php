@@ -12,7 +12,6 @@ class Product extends Model
         'nom',
         'descripcio',
         'preu',
-        'categoria',
         'imatge',
         'disponible',
         'destacat',

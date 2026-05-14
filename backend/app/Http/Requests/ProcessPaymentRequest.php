@@ -23,6 +23,7 @@ class ProcessPaymentRequest extends FormRequest
             'adreca.codi_postal' => ['required_with:adreca', 'string'],
             'adreca.ciutat'   => ['required_with:adreca', 'string'],
             'adreca.etiqueta' => ['nullable', 'string'],
+            'force_status'    => ['nullable', 'string', 'in:exit,fallida'],
         ];
     }
 
