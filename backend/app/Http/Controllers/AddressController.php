@@ -18,16 +18,23 @@ class AddressController extends Controller
 
     public function store(StoreAddressRequest $request): JsonResponse
     {
-        $etiqueta = $request->etiqueta ??
-            $request->adreca . '-' . $request->codi_postal . '-' . $request->ciutat . '-' . now()->timestamp;
-
-        $adreca = Address::create([
-            ...$request->validated(),
+        $data = $request->validated();
+    
+        $etiqueta = $data['etiqueta'] ??
+            $data['adreca'] . '-' . $data['codi_postal'] . '-' . $data['ciutat'] . '-' . now()->timestamp;
+    
+        $adreca = Auth::user()->adreces()->create([
             'etiqueta'       => $etiqueta,
-            'usuari_id'      => Auth::id(),
+            'adreca'         => $data['adreca'],
+            'codi_postal'    => $data['codi_postal'],
+            'ciutat'         => $data['ciutat'],
             'predeterminada' => true,
         ]);
-        return response()->json(['message' => 'Adreça afegida correctament.'], 201);
+    
+        return response()->json([
+            'message' => 'Adreça afegida correctament.',
+            'data' => $adreca
+        ], 201);
     }
 
     public function update(

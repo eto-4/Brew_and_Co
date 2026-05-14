@@ -41,6 +41,11 @@ class DiscountController extends Controller
         return response()->json($codi, 201);
     }
 
+    /**
+     * Actualitzar un codi de descompte.
+     *
+     * @urlParam discountCode integer required ID del codi de descompte. Example: 1
+     */
     public function update(
         UpdateDiscountCodeRequest $request, 
         DiscountCode $discountCode

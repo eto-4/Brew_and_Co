@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Rutes públicas
@@ -32,8 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',          [AuthController::class, 'logout']);
 
     // Rutes usuari
-    Route::get('/user/profile',     [AuthController::class, 'profile']);
-    Route::put('/user/profile',     [AuthController::class, 'updateProfile']);
+    Route::get('/user/profile',     [UserController::class, 'profile']);
+    Route::put('/user/profile',     [UserController::class, 'updateProfile']);
 
     // Rutes de productes
     Route::get('/product/{product}', [ProductController::class, 'show']);
@@ -46,11 +47,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/orders/{order}', [OrderController::class, 'cancel']);
     
     // Rutes de modificacio de direcció
-    Route::get('/user/adresses', [AddressController::class, 'index']);
-    Route::post('/user/adresses', [AddressController::class, 'store']);
-    Route::put('/user/adresses/{adreca}', [AddressController::class, 'update']);
-    Route::delete('/user/adresses/{adreca}', [AddressController::class, 'destroy']);
-    Route::patch('/user/adresses/{adreca}/predeterminada', [AddressController::class, 'setPredeterminada']);
+    Route::get('/user/addresses', [AddressController::class, 'index']);
+    Route::post('/user/addresses', [AddressController::class, 'store']);
+    Route::put('/user/addresses/{adreca}', [AddressController::class, 'update']);
+    Route::delete('/user/addresses/{adreca}', [AddressController::class, 'destroy']);
+    Route::patch('/user/addresses/{adreca}/predeterminada', [AddressController::class, 'setPredeterminada']);
 
     // Rutes Pagaments
     Route::post('/payments/{order}', [PaymentController::class, 'process']);
