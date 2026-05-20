@@ -4,8 +4,19 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request encarregada de validar la creació d'una comanda.
+ *
+ * Defineix les regles necessàries per assegurar que una comanda
+ * contingui com a mínim una línia de producte amb quantitat vàlida.
+ */
 class StoreOrderRequest extends FormRequest
 {
+    /**
+     * Defineix les regles de validació per a la creació d'una comanda.
+     *
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [

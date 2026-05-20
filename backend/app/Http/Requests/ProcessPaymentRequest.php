@@ -5,13 +5,29 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request encarregada de validar les dades del procés de pagament.
+ *
+ * Gestiona la validació del mètode de pagament, codis de descompte
+ * i dades d'adreça (existent o nova) abans de processar la comanda.
+ */
 class ProcessPaymentRequest extends FormRequest
 {
+    /**
+     * Determina si la petició està autoritzada.
+     *
+     * @return bool
+     */
     public function authorize(): bool
     {
         return true;
     }
 
+    /**
+     * Defineix les regles de validació del procés de pagament.
+     *
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -27,6 +43,14 @@ class ProcessPaymentRequest extends FormRequest
         ];
     }
 
+    /**
+     * Afegeix validacions personalitzades després de les regles principals.
+     *
+     * Verifica que l'usuari proporcioni una adreça existent o una de nova.
+     *
+     * @param \Illuminate\Validation\Validator $validator
+     * @return void
+     */
     public function withValidator(Validator $validator): void
     {
         $validator->after(function (Validator $validator) {
