@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Product;
 use App\Http\Requests\StoreOrderRequest;
+use App\Services\OrderTrackingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,22 +21,27 @@ class OrderController extends Controller
     }
 
     // Una ordre concreta
-    public function show(Order $order): JsonResponse
+    public function show(Order $order, OrderTrackingService $service): JsonResponse
     {
         if ($order->usuari_id !== Auth::id()) {
             return response()->json(['message' => 'No autoritzat.'], 403);
         }
+        
+        // Intentar avançar l'estat en cada polling.
+        $service->tryAdvance($order);
 
-        return response()->json($order->load('orderLines.product'));
+        return response()->json(
+            $order->fresh()->load('orderLines.product')
+        );
     }
 
     //  Crear Ordre
     public function store(StoreOrderRequest $request): JsonResponse
     {
-        $order = Order::create([
-            'usuari_id' => Auth::id(),
-            'estat'     => 'pendent',
-            'total'     => 0,
+        $order = Auth::user()->orders()->create([
+            'adreca_id' => null,
+            'estat' => 'pendent',
+            'total' => 0,
         ]);
 
         $total = 0;

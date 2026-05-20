@@ -14,11 +14,11 @@ class DashboardController extends Controller
 {
     public function index(): JsonResponse
     {
-        $totalIngressosMes = Order::where('estat', 'processada')
+        $totalIngressosMes = Order::where('estat', 'entregada')
             ->whereMonth('created_at', now()->month)
             ->sum('total');
 
-        $totalIngressosAllTime = Order::where('estat', 'processada')
+        $totalIngressosAllTime = Order::where('estat', 'entregada')
             ->sum('total');
 
         $ordresMesActual = Order::whereMonth('created_at', now()->month)->count();
@@ -28,7 +28,7 @@ class DashboardController extends Controller
             ->take(3)
             ->get();
 
-        $ingressosPerId = Order::where('estat', 'processada')
+        $ingressosPerId = Order::where('estat', 'entregada')
             ->whereMonth('created_at', now()->month)
             ->selectRaw('DAYOFWEEK(created_at) as dia, SUM(total) as total')
             ->groupBy('dia')

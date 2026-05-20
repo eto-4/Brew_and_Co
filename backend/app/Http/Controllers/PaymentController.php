@@ -47,11 +47,11 @@ class PaymentController extends Controller
         $codiDescompteId = null;
         $descompte = 0;
         
-        $yaAplicoDescompte = $order->payments()
+        $jaAplicoDescompte = $order->payments()
             ->whereNotNull('codi_descompte_id')
             ->exists();
         
-        if (!$yaAplicoDescompte && $request->codi_descompte) {
+        if (!$jaAplicoDescompte && $request->codi_descompte) {
             $codi = DiscountCode::where('codi', $request->codi_descompte)
                 ->where('actiu', true)
                 ->where('expires_at', '>', now())
@@ -63,18 +63,18 @@ class PaymentController extends Controller
             }
         }
 
-        // Simulació del pagament — force_status si és admin
-        if ($request->force_status && Auth::user()->isAdmin()) {
-            $result = [
-                'estat'      => $request->force_status,
-                'descripcio' => $request->force_status === 'exit'
-                    ? 'Pagament forçat per administrador.'
-                    : 'Fallida forçada per administrador.',
-            ];
-        } else {
-            $paymentService = new PaymentService();
-            $result = $paymentService->process();
-        }
+        // // Simulació del pagament — force_status si és admin
+        // if ($request->force_status && Auth::user()->isAdmin()) {
+        //     $result = [
+        //         'estat'      => $request->force_status,
+        //         'descripcio' => $request->force_status === 'exit'
+        //             ? 'Pagament forçat per administrador.'
+        //             : 'Fallida forçada per administrador.',
+        //     ];
+        // } else {
+        $paymentService = new PaymentService();
+        $result = $paymentService->process();
+        // }
 
         // Crear registre de pagament
         $payment = Payment::create([

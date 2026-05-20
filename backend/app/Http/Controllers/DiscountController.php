@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDiscountCodeRequest;
-use App\Http\Requests\UpdateDiscountCodeRequest;
 use App\Models\DiscountCode;
+use App\Models\Payment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DiscountController extends Controller
 {
@@ -23,41 +23,20 @@ class DiscountController extends Controller
             ], 422);
         }
 
+        $jaUsat = Payment::whereHas('order', function ($q) {
+            $q->where('usuari_id', Auth::id());
+        })->where('codi_descompte_id', $codi->id)->exists();
+
+        if ($jaUsat) {
+            return response()->json([
+                'message' => 'Ja has utilitzat aquest codi de descompte.'
+            ], 422);
+        }
+
         return response()->json([
             'codi'        => $codi->codi,
             'percentatge' => $codi->percentatge,
         ]);
     }
 
-    public function store(StoreDiscountCodeRequest $request): JsonResponse
-    {
-        $codi = DiscountCode::create([
-            'codi'        => $request->codi,
-            'percentatge' => $request->percentatge,
-            'actiu'       => $request->actiu ?? true,
-            'expires_at'  => $request->expires_at,
-        ]);
-
-        return response()->json($codi, 201);
-    }
-
-    /**
-     * Actualitzar un codi de descompte.
-     *
-     * @urlParam discountCode integer required ID del codi de descompte. Example: 1
-     */
-    public function update(
-        UpdateDiscountCodeRequest $request, 
-        DiscountCode $discountCode
-    ): JsonResponse
-    {
-        $discountCode->update($request->only([
-            'codi',
-            'percentatge',
-            'actiu',
-            'expires_at',
-        ]));
-
-        return response()->json($discountCode);
-    }
 }

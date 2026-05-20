@@ -28,9 +28,8 @@ class AddressController extends Controller
             'adreca'         => $data['adreca'],
             'codi_postal'    => $data['codi_postal'],
             'ciutat'         => $data['ciutat'],
-            'predeterminada' => true,
+            'predeterminada' => Auth::user()->adreces()->count() === 0,
         ]);
-    
         return response()->json([
             'message' => 'Adreça afegida correctament.',
             'data' => $adreca
@@ -46,8 +45,19 @@ class AddressController extends Controller
             return response()->json(['message' => 'No autoritzat'], 403);
         }
         
-        $adreca->update($request->validated());
-        return response()->json(['message' => 'Adreça actualitzada correctament.'], 200);
+        $data = $request->validated();
+        $etiqueta = $data['etiqueta'] ??
+            $data['adreca'] . '-' . $data['codi_postal'] . '-' . $data['ciutat'] . '-' . now()->timestamp;
+
+        $adreca->update([
+            'etiqueta'       => $etiqueta,
+            'adreca'         => $data['adreca'],
+            'codi_postal'    => $data['codi_postal'],
+            'ciutat'         => $data['ciutat'],
+        ]);
+        return response()->json([
+            'message' => 'Adreça actualitzada correctament.'
+        ], 200);
     }
 
     public function destroy(Address $adreca): JsonResponse
@@ -62,10 +72,18 @@ class AddressController extends Controller
 
     public function setPredeterminada(Address $adreca): JsonResponse
     {
-        // Reset de totes les adreces de l'usuari -> No predeterminat
-        Auth::user()->adreces()->update(['predeterminada' => false]);
-        // Posem la nova/seleccionada com a predeterminada
-        $adreca->update(['predeterminada' => true]);
+        if ($adreca->usuari_id !== Auth::id()) {
+            return response()->json(['message' => 'No autoritzat'], 403);
+        }
+
+        Auth::user()->adreces()->update([
+            'predeterminada' => false
+        ]);
+
+        $adreca->update([
+            'predeterminada' => true
+        ]);
+
         return response()->json([
             'message' => 'Adreça predeterminada actualitzada.'
         ], 200);

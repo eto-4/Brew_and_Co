@@ -33,8 +33,8 @@ class AIAssistantController extends Controller
     private function buildContext(): string
     {
         $totalOrdres       = Order::count();
-        $ordresProcessades = Order::where('estat', 'processada')->count();
-        $totalIngressos    = Order::where('estat', 'processada')->sum('total');
+        $ordresProcessades = Order::where('estat', 'entregada')->count();
+        $totalIngressos    = Order::where('estat', 'entregada')->sum('total');
 
         $productesPopulars = Product::withCount('orderLines')
             ->orderBy('order_lines_count', 'desc')
@@ -43,7 +43,7 @@ class AIAssistantController extends Controller
             ->map(fn($p) => "{$p->nom}: {$p->order_lines_count} unitats venudes")
             ->join(', ');
 
-        $ordresPerDia = Order::where('estat', 'processada')
+        $ordresPerDia = Order::where('estat', 'entregada')
             ->selectRaw('DAYOFWEEK(created_at) as dia, COUNT(*) as total')
             ->groupBy('dia')
             ->get()
