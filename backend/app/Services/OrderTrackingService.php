@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 
 class OrderTrackingService
 {
@@ -11,18 +12,44 @@ class OrderTrackingService
         $minuts = rand(1, 5);
 
         $order->update([
-            'estat'          => 'empaquetant',
-            'temps_estimat'  => now()->addMinutes($minuts),
+            'estat'         => 'empaquetant',
+            'temps_estimat' => now()->addMinutes($minuts),
         ]);
+
+        Log::info("INIT TRACKING", [
+            'order_id' => $order->id,
+            'state'    => $order->estat
+        ]);
+    }
+
+    public function tryAdvance(Order $order): void
+    {
+        if (!$order->temps_estimat) return;
+
+        if (now()->lt($order->temps_estimat)) {
+            return;
+        }
+
+        $this->advanceTracking($order->fresh());
     }
 
     public function advanceTracking(Order $order): void
     {
-        match($order->estat) {
-            'empaquetant' => $this->startEnviament($order),
-            'en_enviament' => $this->completeOrder($order),
-            default => null,
+        Log::info("ADVANCE BEFORE", [
+            'order_id' => $order->id,
+            'state'    => $order->estat
+        ]);
+
+        match ($order->estat) {
+            'empaquetant'   => $this->startEnviament($order),
+            'en_enviament'  => $this->completeOrder($order),
+            default         => null,
         };
+
+        Log::info("ADVANCE AFTER", [
+            'order_id' => $order->id,
+            'state'    => $order->fresh()->estat
+        ]);
     }
 
     public function skipCurrentStep(Order $order): void
@@ -44,28 +71,22 @@ class OrderTrackingService
     {
         $rand = rand(1, 1000);
 
-        $estat  = 'entregada';
+        $estat = 'entregada';
         $missatge = null;
 
-        if ($rand <= 30) {         // 3% — el repartidor s'ha menjat la comanda
-        
+        if ($rand <= 30) {
             $estat = 'incidencia';
-            $missatge = "Lamentem informar-li que el nostre repartidor ha consumit la seva comanda durant el trajecte. Ens disculpem per les molèsties ocasionades.";
-        
-        } elseif ($rand <= 40) {   // 1% — repartidor arrestat
-
+            $missatge = "El repartidor ha consumit la comanda.";
+        } elseif ($rand <= 40) {
             $estat = 'incidencia';
-            $missatge = "Degut a circumstàncies legals imprevistes que afecten al seu repartidor assignat, la seva comanda es troba temporalment retinguda. El nostre equip jurídic està tractant el cas.";
-        
-        } elseif ($rand <= 45) {   // 0.5% — havia d'anar al bany
-
+            $missatge = "Problema legal del repartidor.";
+        } elseif ($rand <= 45) {
             $estat = 'en_enviament';
-            $missatge = "El seu repartidor ha hagut de fer una parada tècnica imprevista. El temps estimat s'ha recalculat.";
+            $missatge = "Parada tècnica del repartidor.";
             $order->update(['temps_estimat' => now()->addHours(99)]);
-        
-        } elseif ($rand <= 46) {   // 0.1% — perdut, comanda en una altra ciutat
+        } elseif ($rand <= 46) {
             $estat = 'incidencia';
-            $missatge = "Lamentem informar-li que per un error de navegació, la seva comanda es troba actualment en una ubicació diferent a la prevista. El nostre equip d'operacions està localitzant el paquet.";
+            $missatge = "Comanda perduda en trànsit.";
         }
 
         $order->update([
