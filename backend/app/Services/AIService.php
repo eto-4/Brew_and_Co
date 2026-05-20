@@ -4,17 +4,55 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
+/**
+ * Servei encarregat de la comunicació amb la IA externa.
+ *
+ * Gestiona les peticions al model d'intel·ligència artificial per
+ * respondre consultes relacionades amb les dades de la cafeteria.
+ */
 class AIService
 {
+    /**
+     * Clau d'autenticació per accedir a l'API de la IA.
+     *
+     * @var string
+     */
     private string $apiKey;
-    private string $apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
-    private string $model  = 'llama3-70b-8192';
 
+    /**
+     * URL de l'endpoint utilitzat per enviar peticions al model de IA.
+     *
+     * @var string
+     */
+    private string $apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
+
+    /**
+     * Nom del model de llenguatge utilitzat per processar les consultes.
+     *
+     * @var string
+     */
+    private string $model  = 'llama-3.3-70b-versatile';
+
+    /**
+     * Inicialitza el servei carregant la configuració de l'API.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->apiKey = config('ai.groq_api_key');
     }
 
+    /**
+     * Envia una consulta a la IA amb el context actual del sistema.
+     *
+     * Genera una conversa amb un prompt de sistema limitat a dades
+     * relacionades amb la cafeteria i retorna la resposta generada.
+     *
+     * @param string $userMessage Missatge enviat per l'usuari.
+     * @param string $context Context actual de dades del sistema.
+     * @return array{success: bool, message: string}
+     */
     public function chat(string $userMessage, string $context): array
     {
         $systemPrompt = "Ets un assistent d'anàlisi de dades per a la cafeteria Brew & Co.
