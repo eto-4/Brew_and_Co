@@ -103,7 +103,7 @@ CREATE TABLE codis_descompte (
 CREATE TABLE comandes (
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     usuari_id BIGINT UNSIGNED NOT NULL,
-    adreca_id BIGINT UNSIGNED NOT NULL,
+    adreca_id BIGINT UNSIGNED NULL,
     temps_estimat DATETIME NULL,
     missatge VARCHAR(255) NULL,
     estat VARCHAR(100) NOT NULL,
