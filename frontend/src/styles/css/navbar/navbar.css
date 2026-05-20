@@ -1,0 +1,79 @@
+.nb-inner {
+  background-color: var(--color-bg);
+  border: 0.5px solid rgba(62, 31, 0, 0.12);
+  box-shadow: 0 2px 16px rgba(62, 31, 0, 0.08);
+}
+
+.nb-brand-title {
+  color: var(--color-primary);
+}
+
+.nb-brand-ampersand {
+  color: var(--color-primary-soft);
+}
+
+.nb-icon-btn {
+  color: var(--color-text-dark);
+  border: 0.5px solid rgba(62, 31, 0, 0.12);
+}
+
+.nb-icon-btn:hover {
+  background-color: var(--color-surface);
+}
+
+.nb-divider {
+  background-color: rgba(62, 31, 0, 0.12);
+}
+
+.nb-user-wrapper {
+  border: 0.5px solid rgba(62, 31, 0, 0.12);
+}
+
+.nb-user-wrapper:hover {
+  background-color: var(--color-surface);
+}
+
+.nb-avatar {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.nb-username {
+  color: var(--color-primary);
+}
+
+.nb-chevron {
+  color: var(--color-primary-soft);
+}
+
+.nb-btn-login {
+  color: var(--color-text-dark);
+}
+
+.nb-btn-login:hover {
+  background-color: var(--color-surface);
+}
+
+.nb-btn-register {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.nb-btn-register:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.nb-dropdown {
+  background-color: var(--color-bg);
+  border: 0.5px solid rgba(62, 31, 0, 0.12);
+  box-shadow: 0 4px 16px rgba(62, 31, 0, 0.10);
+}
+
+.nb-dropdown-item {
+  color: var(--color-text);
+}
+
+.nb-dropdown-item:hover {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+}

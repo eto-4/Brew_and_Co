@@ -1,0 +1,110 @@
+.auth-page {
+  background-color: var(--color-bg-page);
+  min-height: 100vh;
+}
+
+.auth-card {
+  background-color: var(--color-bg);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(62, 31, 0, 0.10);
+  border: 0.5px solid rgba(62, 31, 0, 0.10);
+}
+
+.auth-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.auth-brand-amp {
+  color: var(--color-primary-soft);
+}
+
+.auth-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.auth-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.auth-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.auth-input {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--color-text-dark);
+  border: 0.5px solid rgba(62, 31, 0, 0.2);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background-color: var(--color-bg);
+}
+
+.auth-input:focus {
+  border-color: var(--color-primary);
+}
+
+.auth-input.error {
+  border-color: var(--color-danger);
+}
+
+.auth-error {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--color-danger);
+}
+
+.auth-btn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 12px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.auth-btn:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.auth-link a {
+  color: var(--color-primary);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.auth-server-error {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--color-danger);
+  background-color: rgba(255, 0, 0, 0.05);
+  border: 0.5px solid rgba(255, 0, 0, 0.15);
+  border-radius: 10px;
+}

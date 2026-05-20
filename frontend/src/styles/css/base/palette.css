@@ -1,0 +1,15 @@
+:root {
+    --color-primary-fosc: #281602;
+    --color-primary: #3e1f00;
+    --color-primary-soft: #7b4a1e;
+    --color-text: #555555;
+    --color-bg: #ffffff;
+    --color-surface: #f0f0f0;
+    --color-surface-alt: #efefef;
+    --color-success: #6aa84f;
+    --color-info: #6d9eeb;
+    --color-danger: #ff0000;
+    --color-text-dark: #1a1a1a;
+    --color-primary-hover: #2a1400;
+    --color-bg-page: #f5f0eb;
+}

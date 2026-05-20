@@ -1,0 +1,18 @@
+export const authStyles = {
+  page: 'auth-page flex items-center justify-center px-4 py-16',
+  card: 'auth-card w-full max-w-md px-10 py-10 flex flex-col gap-6',
+  brand: 'auth-brand text-center',
+  amp: 'auth-brand-amp',
+  header: 'flex flex-col gap-1',
+  title: 'auth-title',
+  subtitle: 'auth-subtitle',
+  form: 'flex flex-col gap-4',
+  field: 'flex flex-col gap-1',
+  label: 'auth-label',
+  input: 'auth-input w-full px-4 py-2.5',
+  inputError: 'auth-input error w-full px-4 py-2.5',
+  error: 'auth-error',
+  btn: 'auth-btn w-full py-3 cursor-pointer',
+  link: 'auth-link text-center',
+  serverError: 'auth-server-error px-4 py-3',
+}

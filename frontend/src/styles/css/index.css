@@ -1,0 +1,17 @@
+@import './base/fonts.css';
+@import './base/palette.css';
+@import './base/global.css';
+@import './base/animations.css';
+
+@import './navbar/navbar.css';
+@import './base/toasts.css';
+
+@import './auth/auth.css';
+@import './home/home.css';
+@import './settings/settings.css';
+@import './orders/orders.css';
+@import './orders/payment/payment.css';
+@import './orders/tracker/tracker.css';
+@import './admin/admin.css';
+
+@import './footer/footer.css';

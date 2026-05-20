@@ -1,0 +1,294 @@
+.admin-page {
+  background-color: var(--color-bg-page);
+}
+
+.admin-container {
+  background-color: var(--color-bg);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+  border-radius: 16px;
+  border: 0.5px solid rgba(62, 31, 0, 0.10);
+  overflow: hidden;
+}
+
+.admin-sidebar {
+  background-color: var(--color-surface);
+  border-right: 0.5px solid rgba(62, 31, 0, 0.10);
+}
+
+.admin-sidebar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.admin-tab-btn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-align: left;
+}
+
+.admin-tab-btn:hover {
+  background-color: var(--color-surface-alt);
+  color: var(--color-primary);
+}
+
+.admin-tab-btn.active {
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(62, 31, 0, 0.08);
+}
+
+.admin-content {
+  overflow-y: auto;
+}
+
+.admin-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.admin-stat-card {
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  border: 0.5px solid rgba(62, 31, 0, 0.08);
+}
+
+.admin-stat-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.admin-stat-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.admin-stat-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--color-text);
+  opacity: 0.6;
+}
+
+.admin-popular-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--color-text);
+  border-bottom: 0.5px solid rgba(62, 31, 0, 0.06);
+}
+
+.admin-popular-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--color-primary-soft);
+}
+
+.admin-popular-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.admin-product-card {
+  background-color: var(--color-bg);
+  border: 0.5px solid rgba(62, 31, 0, 0.12);
+  border-radius: 12px;
+  transition: box-shadow 0.2s ease;
+}
+
+.admin-product-card:hover {
+  box-shadow: 0 4px 16px rgba(62, 31, 0, 0.08);
+}
+
+.admin-product-name {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.admin-product-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--color-primary-soft);
+}
+
+.admin-product-unavailable {
+  opacity: 0.5;
+}
+
+.admin-switch {
+  position: relative;
+  width: 40px;
+  height: 22px;
+}
+
+.admin-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.admin-switch-slider {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-surface-alt);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border: 0.5px solid rgba(62, 31, 0, 0.15);
+}
+
+.admin-switch-slider::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.admin-switch input:checked + .admin-switch-slider {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.admin-switch input:checked + .admin-switch-slider::before {
+  transform: translateY(-50%) translateX(18px);
+}
+
+.chat-container {
+  background-color: var(--color-bg);
+  border-radius: 12px;
+  border: 0.5px solid rgba(62, 31, 0, 0.10);
+  overflow: hidden;
+}
+
+.chat-header {
+  background-color: var(--color-surface);
+  border-bottom: 0.5px solid rgba(62, 31, 0, 0.10);
+}
+
+.chat-header-name {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.chat-header-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-success);
+  box-shadow: 0 0 6px var(--color-success);
+}
+
+.chat-messages {
+  background-color: var(--color-bg);
+}
+
+.chat-bubble-ai {
+  background-color: var(--color-surface);
+  border-radius: 0 12px 12px 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--color-text-dark);
+  line-height: 1.6;
+}
+
+.chat-bubble-user {
+  background-color: var(--color-primary);
+  border-radius: 12px 12px 0 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--color-bg);
+  line-height: 1.6;
+}
+
+.chat-avatar-ai {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border-radius: 50%;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.chat-avatar-user {
+  background-color: var(--color-surface-alt);
+  color: var(--color-primary);
+  border-radius: 50%;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.chat-input {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--color-text-dark);
+  border: 0.5px solid rgba(62, 31, 0, 0.2);
+  border-radius: 10px;
+  outline: none;
+  background-color: var(--color-bg);
+  transition: border-color 0.2s ease;
+  resize: none;
+}
+
+.chat-input:focus {
+  border-color: var(--color-primary);
+}
+
+.chat-send-btn {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.chat-send-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.chat-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chat-typing {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--color-text);
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.chat-footer {
+  border-top: 0.5px solid rgba(62, 31, 0, 0.10);
+}

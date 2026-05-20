@@ -1,0 +1,377 @@
+.orders-page {
+  background-color: var(--color-bg-page);
+  min-height: 100vh;
+}
+
+.orders-container {
+  background-color: var(--color-bg);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+  border-radius: 16px;
+  border: 0.5px solid rgba(62, 31, 0, 0.10);
+  overflow: hidden;
+}
+
+.orders-tabs {
+  border-bottom: 0.5px solid rgba(62, 31, 0, 0.12);
+}
+
+.orders-tab {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 0.5px solid rgba(62, 31, 0, 0.10);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.06);
+}
+
+.orders-tab:hover {
+  background-color: var(--color-surface-alt);
+  color: var(--color-primary);
+}
+
+.orders-tab.active {
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  z-index: 2;
+  box-shadow: 2px -2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.orders-tab-content {
+  position: relative;
+}
+
+.order-card {
+  background-color: var(--color-bg);
+  border: 0.5px solid rgba(62, 31, 0, 0.12);
+  border-radius: 12px;
+  transition: box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 16px rgba(62, 31, 0, 0.08);
+}
+
+.order-card:hover .order-card-actions {
+  opacity: 1;
+}
+
+.order-card-actions {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.order-card-id {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--color-primary-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.order-card-products {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.order-card-total {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.order-btn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.order-btn-edit {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.order-btn-edit:hover {
+  background-color: var(--color-surface-alt);
+}
+
+.order-btn-process {
+  background-color: var(--color-success);
+  color: #fff;
+}
+
+.order-btn-process:hover {
+  background-color: #5a9442;
+}
+
+.orders-empty {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.orders-empty-btn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.orders-empty-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.orders-create-btn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.orders-create-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.order-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.order-modal {
+  background-color: var(--color-bg);
+  border-radius: 20px;
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.2);
+  border: 0.5px solid rgba(62, 31, 0, 0.10);
+}
+
+.order-modal-grid-bg {
+  background-color: var(--color-primary);
+  border-radius: 12px;
+}
+
+.order-modal-grid-inner {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+}
+
+.product-card {
+  background-color: var(--color-bg);
+  border-radius: 10px;
+  border: 1.5px solid var(--color-primary);
+  transition: box-shadow 0.2s ease;
+}
+
+.product-card.unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.product-card-image {
+  border-radius: 8px 0 0 8px;
+  object-fit: cover;
+}
+
+.product-card-image.grayscale {
+  filter: grayscale(100%);
+}
+
+.product-card-name {
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.product-card-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--color-primary-soft);
+}
+
+.product-qty-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 0.5px solid rgba(62, 31, 0, 0.2);
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.product-qty-btn:hover {
+  background-color: var(--color-surface-alt);
+}
+
+.product-qty-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--color-primary);
+  min-width: 20px;
+  text-align: center;
+}
+
+.order-summary-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.order-summary-divider {
+  background-color: rgba(62, 31, 0, 0.12);
+}
+
+.order-summary-item-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.order-summary-item-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.order-summary-total-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.order-summary-total-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.order-modal-save-btn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--color-success);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.order-modal-save-btn:hover {
+  background-color: #5a9442;
+}
+
+.order-modal-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.order-modal-delete-btn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgba(255, 0, 0, 0.07);
+  color: var(--color-danger);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.order-modal-delete-btn:hover {
+  background-color: rgba(255, 0, 0, 0.14);
+}
+
+.category-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.orders-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.orders-footer {
+  border-top: 0.5px solid rgba(62, 31, 0, 0.08);
+}
+
+.order-card-footer {
+  margin-top: 0.25rem;
+}
+
+.order-modal-header {
+  border-bottom: 0.5px solid rgba(62, 31, 0, 0.08);
+}
+
+.order-modal-summary-header {
+  border-bottom: 0.5px solid rgba(62, 31, 0, 0.08);
+}
+
+.order-modal-summary-section {
+  border-left: 0.5px solid rgba(62, 31, 0, 0.08);
+}
+
+.order-modal-summary-footer {
+  border-top: 0.5px solid rgba(62, 31, 0, 0.08);
+}
+
+.order-status-success {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--color-success);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.order-status-danger {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--color-danger);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.order-incidencia-msg {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--color-danger);
+  font-style: italic;
+}

@@ -1,0 +1,148 @@
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 500;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+
+.hero-slogan {
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  color: var(--color-text);
+  line-height: 1.7;
+}
+
+.hero-image {
+  border-radius: 16px;
+}
+
+.home-divider {
+  background-color: rgba(62, 31, 0, 0.12);
+}
+
+.about-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.about-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--color-text);
+  line-height: 1.8;
+}
+
+.about-image {
+  border-radius: 12px;
+}
+
+.steps-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.steps-container {
+  background-color: var(--color-surface);
+  border: 0.5px solid rgba(62, 31, 0, 0.12);
+  border-radius: 16px;
+}
+
+.step-card {
+  background-color: var(--color-bg);
+  border: 0.5px solid rgba(62, 31, 0, 0.10);
+  border-radius: 12px;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.step-card:hover {
+  box-shadow: 0 4px 20px rgba(62, 31, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.step-image {
+  border-radius: 10px;
+}
+
+.step-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--color-primary-soft);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.step-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.step-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.home-page {
+  background-color: var(--color-bg);
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.13), 8px 0 32px rgba(0, 0, 0, 0.13);
+}
+
+.pg-section {
+  background-color: var(--color-primary-dark, var(--color-primary));
+}
+
+.pg-grid-inner {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+.pg-card {
+  border: 2px solid var(--color-primary-soft);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.pg-card:hover {
+  box-shadow: 0 0 24px rgba(240, 240, 240, 0.15);
+  transform: translateY(-2px);
+}
+
+.pg-image {
+  transition: transform 0.4s ease;
+}
+
+.pg-card:hover .pg-image {
+  transform: scale(1.06);
+}
+
+.pg-cta {
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+}
+
+.pg-cta:hover {
+  background-color: var(--color-surface);
+  transform: translateY(-1px);
+}
+
+.grid-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+  font-weight: 500;
+  text-decoration: underline dashed;
+  text-decoration-thickness: 5px;
+  color: var(--color-surface);
+  text-decoration-color: var(--color-primary-soft);
+}
