@@ -10,8 +10,23 @@ use App\Services\AIService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Controlador responsable de l'assistent d'intel·ligència artificial.
+ *
+ * Permet interactuar amb un model d'IA utilitzant dades del sistema
+ * per respondre preguntes relacionades amb el negoci.
+ */
 class AIAssistantController extends Controller
 {
+    /**
+     * Gestiona la conversa amb l'assistent d'IA.
+     *
+     * Valida el missatge de l'usuari, construeix el context del sistema
+     * i retorna la resposta generada per la IA.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function chat(Request $request): JsonResponse
     {
         $request->validate([
@@ -30,6 +45,14 @@ class AIAssistantController extends Controller
         return response()->json(['message' => $result['message']]);
     }
 
+    /**
+     * Construeix el context de dades del sistema per a la IA.
+     *
+     * Recull estadístiques de comandes, ingressos, productes més venuts,
+     * patrons de compres i pagaments fallits.
+     *
+     * @return string
+     */
     private function buildContext(): string
     {
         $totalOrdres       = Order::count();

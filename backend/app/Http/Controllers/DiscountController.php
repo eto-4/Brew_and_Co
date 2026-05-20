@@ -8,8 +8,23 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controlador responsable de la validació de codis de descompte.
+ *
+ * Permet verificar si un codi és vàlid, està actiu i si l'usuari
+ * ja l'ha utilitzat prèviament.
+ */
 class DiscountController extends Controller
 {
+    /**
+     * Valida un codi de descompte per a l'usuari autenticat.
+     *
+     * Comprova si el codi existeix, està actiu, no ha caducat i si
+     * l'usuari ja l'ha utilitzat en pagaments anteriors.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function validate(Request $request): JsonResponse
     {
         $codi = DiscountCode::where('codi', $request->codi)

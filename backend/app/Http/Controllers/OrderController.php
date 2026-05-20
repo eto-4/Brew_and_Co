@@ -10,9 +10,21 @@ use App\Services\OrderTrackingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controlador responsable de la gestió de comandes.
+ *
+ * Permet crear, consultar, modificar i cancel·lar comandes de l'usuari,
+ * així com consultar totes les comandes en mode administrador.
+ */
 class OrderController extends Controller 
 {
-    // Ordres de l'usuari autenticat.
+    /**
+     * Retorna totes les comandes de l'usuari autenticat.
+     *
+     * Inclou les línies de comanda i els productes associats.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(): JsonResponse
     {
         $orders = Auth::user()->orders()->with('orderLines.product')->get();
@@ -20,7 +32,15 @@ class OrderController extends Controller
         return response()->json($orders);
     }
 
-    // Una ordre concreta
+    /**
+     * Retorna una comanda concreta de l'usuari autenticat.
+     *
+     * També intenta avançar l'estat del seguiment de la comanda.
+     *
+     * @param \App\Models\Order $order
+     * @param \App\Services\OrderTrackingService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(Order $order, OrderTrackingService $service): JsonResponse
     {
         if ($order->usuari_id !== Auth::id()) {
@@ -35,7 +55,15 @@ class OrderController extends Controller
         );
     }
 
-    //  Crear Ordre
+    /**
+     * Crea una nova comanda per a l'usuari autenticat.
+     *
+     * Genera les línies de comanda, calcula el total i inicialitza
+     * la comanda en estat pendent.
+     *
+     * @param \App\Http\Requests\StoreOrderRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(StoreOrderRequest $request): JsonResponse
     {
         $order = Auth::user()->orders()->create([
@@ -64,7 +92,15 @@ class OrderController extends Controller
         return response()->json($order->load('orderLines.product'), 201);
     }
 
-    // Modificar Ordre (només linies de comanda)
+    /**
+     * Actualitza una comanda pendent substituint les seves línies.
+     *
+     * Recalcula el total i elimina les línies anteriors abans d'afegir-ne de noves.
+     *
+     * @param \App\Http\Requests\StoreOrderRequest $request
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(
         StoreOrderRequest $request, 
         Order $order
@@ -100,7 +136,12 @@ class OrderController extends Controller
         return response()->json($order->load('orderLines.product'));
     }
 
-    // Cancel·lar Ordre
+    /**
+     * Cancel·la una comanda si encara no ha estat processada.
+     *
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cancel(Order $order): JsonResponse
     {
         if ($order->usuari_id !== Auth::id()) {
@@ -116,7 +157,13 @@ class OrderController extends Controller
         return response()->json(['message' => 'Ordre cancel·lada correctament.']);
     }
 
-    // Totes les ordres (Només admin)
+    /**
+     * Retorna totes les comandes del sistema (només administradors).
+     *
+     * Inclou informació de les línies de comanda, productes i usuaris.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function indexAll(): JsonResponse
     {
         $orders = Order::with('orderLines.product', 'user')->get();

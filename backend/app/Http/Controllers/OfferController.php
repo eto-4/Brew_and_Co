@@ -6,8 +6,19 @@ use App\Http\Requests\StoreOfferRequest;
 use App\Models\Offer;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Controlador responsable de la gestió de les ofertes.
+ *
+ * Permet consultar, crear, actualitzar i eliminar ofertes,
+ * així com gestionar la seva relació amb els productes.
+ */
 class OfferController extends Controller
 {
+    /**
+     * Retorna totes les ofertes amb els seus productes associats.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(): JsonResponse
     {
         $offers = Offer::with('products')->get();
@@ -15,6 +26,12 @@ class OfferController extends Controller
         return response()->json($offers);
     }
 
+    /**
+     * Crea una nova oferta i la relaciona amb productes.
+     *
+     * @param \App\Http\Requests\StoreOfferRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(StoreOfferRequest $request): JsonResponse
     {
         $offer = Offer::create([
@@ -28,6 +45,13 @@ class OfferController extends Controller
         return response()->json($offer->load('products'), 201);
     }
 
+    /**
+     * Actualitza una oferta existent i sincronitza els seus productes.
+     *
+     * @param \App\Http\Requests\StoreOfferRequest $request
+     * @param \App\Models\Offer $offer
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(StoreOfferRequest $request, Offer $offer): JsonResponse
     {
         $offer->update([
@@ -43,6 +67,12 @@ class OfferController extends Controller
         return response()->json($offer->load('products'));
     }
 
+    /**
+     * Elimina una oferta i desassocia tots els seus productes.
+     *
+     * @param \App\Models\Offer $offer
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Offer $offer): JsonResponse
     {
         $offer->products()->detach();

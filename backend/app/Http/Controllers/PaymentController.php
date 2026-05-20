@@ -12,8 +12,24 @@ use App\Services\PaymentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controlador responsable del processament de pagaments.
+ *
+ * Gestiona la creació de pagaments, aplicació de descomptes,
+ * assignació d'adreces i inici del tracking de comandes.
+ */
 class PaymentController extends Controller
 {
+    /**
+     * Processa el pagament d'una comanda.
+     *
+     * Valida l'usuari, gestiona l'adreça (existent o nova), aplica codis
+     * de descompte, simula el pagament i actualitza l'estat de la comanda.
+     *
+     * @param \App\Http\Requests\ProcessPaymentRequest $request
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function process(ProcessPaymentRequest $request, Order $order): JsonResponse
     {
         if ($order->usuari_id !== Auth::id()) {
@@ -104,6 +120,14 @@ class PaymentController extends Controller
         ], $result['estat'] === 'exit' ? 200 : 422);
     }
 
+    /**
+     * Retorna dades de prova per facilitar el procés de pagament a administradors.
+     *
+     * Inclou una targeta fictícia i una adreça per omplir automàticament
+     * el formulari de pagament.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function adminPrefill(): JsonResponse
     {
         $adreca = Auth::user()->adreces()
