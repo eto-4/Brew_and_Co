@@ -10,27 +10,31 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Job encarregat d'inicialitzar el seguiment d'una comanda.
+ *
+ * Executa el servei de tracking per assignar l'estat inicial
+ * i el temps estimat de processament de la comanda.
+ */
 class ProcessOrderTracking implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * Inicialitza el job amb la comanda que s'ha de processar.
+     *
+     * @param \App\Models\Order $order
+     */
     public function __construct(private Order $order) {}
 
+    /**
+     * Executa el procés d'inicialització del seguiment de la comanda.
+     *
+     * @param \App\Services\OrderTrackingService $trackingService
+     * @return void
+     */
     public function handle(OrderTrackingService $trackingService): void
     {
-        $trackingService->initTracking($this->order);
-
-        // Fase 1 - Empaquetant
-        $minutsEmpaquetant = $this->order->temps_estimat->diffInMinutes(now());
-        sleep($minutsEmpaquetant * 60);
-
-        $trackingService->advanceTracking($this->order->fresh());
-
-        // Fase 2 - En enviament
-        $this->order->refresh();
-        $minutsEnviament = $this->order->temps_estimat->diffInMinutes(now());
-        sleep($minutsEnviament * 60);
-
-        $trackingService->advanceTracking($this->order->fresh());
+        $trackingService->initTracking($this->order->fresh());
     }
 }
