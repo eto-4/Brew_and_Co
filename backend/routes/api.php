@@ -35,6 +35,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Rutes usuari
     Route::get('/user/profile',     [UserController::class, 'profile']);
     Route::put('/user/profile',     [UserController::class, 'updateProfile']);
+    
+    // Rutes canvi contrasenya
+    Route::put('/user/password',     [UserController::class, 'updatePassword']);
 
     // Rutes de productes
     Route::get('/product/{product}', [ProductController::class, 'show']);
@@ -69,16 +72,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/orders', [OrderController::class, 'indexAll']);
 
         // Rutes Pagaments
-        Route::patch('/payments/{payment}/force', [PaymentController::class, 'forceStatus']);
+        Route::get('/payment-prefill', [PaymentController::class, 'adminPrefill']);
 
         // Rutes Ofertes
         Route::post('/offers', [OfferController::class, 'store']);
         Route::put('/offers/{offer}', [OfferController::class, 'update']);
         Route::delete('/offers/{offer}', [OfferController::class, 'destroy']);
-
-        // Rutes codis descompte
-        Route::post('/discounts', [DiscountController::class, 'store']);
-        Route::put('/discounts/{discountCode}', [DiscountController::class, 'update']);
 
         // Administracio:
         Route::get('/dashboard', [DashboardController::class, 'index']);
