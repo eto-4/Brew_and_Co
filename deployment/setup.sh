@@ -2,13 +2,12 @@
 # =============================================================
 # BrewCo - INITIAL SETUP
 # Clones the repo, reorganizes the structure, builds images,
-# uploads them to Harbor and starts the containers.
+# uploads them to Harbor and deploys to Kubernetes.
 #
 # Usage: bash setup.sh
 # Only executed ONCE (or whenever you want to rebuild everything).
 # For updates use: bash update.sh
 # =============================================================
-
 set -e
 
 # --------------------------------------------------
@@ -16,16 +15,13 @@ set -e
 # --------------------------------------------------
 GITHUB_TOKEN="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"
 GITHUB_REPO="https://${GITHUB_TOKEN}@github.com/eto-4/Brew_and_Co.git"
-
 REGISTRY="kube0.lacetania.cat"
 NAMESPACE="grup3"
 HARBOR_USER="grup3"
 HARBOR_PASS="HbFSeVLXLO1"
-
 IMAGE_FRONTEND="${REGISTRY}/${NAMESPACE}/frontendg3"
 IMAGE_BACKEND="${REGISTRY}/${NAMESPACE}/backendg3"
 IMAGE_DATABASE="${REGISTRY}/${NAMESPACE}/databaseg3"
-
 BREWCO_DIR=~/BrewCo
 VITE_API_URL="http://grup3.infla.cat/brewco/api"
 
@@ -61,26 +57,14 @@ log "Repository cloned."
 
 # --------------------------------------------------
 # 3. Reorganize structure
-#    repo/
-#      frontend/   → ~/BrewCo/frontend/
-#      backend/    → ~/BrewCo/backend/
-#      deployment/ → ~/BrewCo/deployment/   (Dockerfiles, configs)
 # --------------------------------------------------
 log "Reorganizing folder structure..."
-
-# Frontend
 rm -rf "${BREWCO_DIR}/frontend"
 mv "${BREWCO_DIR}/repo/frontend" "${BREWCO_DIR}/frontend"
-
-# Backend
 rm -rf "${BREWCO_DIR}/backend"
 mv "${BREWCO_DIR}/repo/backend"  "${BREWCO_DIR}/backend"
-
-# Deployment (Dockerfiles and configs)
 rm -rf "${BREWCO_DIR}/deployment"
 mv "${BREWCO_DIR}/repo/deployment" "${BREWCO_DIR}/deployment"
-
-# Remove cloned repo folder (we no longer need it)
 rm -rf "${BREWCO_DIR}/repo"
 
 log "Final structure:"
@@ -96,15 +80,14 @@ echo "${HARBOR_PASS}" | docker login "${REGISTRY}" -u "${HARBOR_USER}" --passwor
   || err "Harbor login failed"
 
 # --------------------------------------------------
-# 5. Build Database image (MySQL + project SQL)
+# 5. Build Database image
 # --------------------------------------------------
 log "=== BUILD: MySQL Database ==="
-# Copy project SQL into the database Dockerfile context
 cp "${BREWCO_DIR}/backend/database/sql/brewco.sql" \
    "${BREWCO_DIR}/deployment/database/brewco.sql" \
    || err "backend/database/sql/brewco.sql not found"
-
 docker build \
+  --no-cache \
   -t "${IMAGE_DATABASE}:latest" \
   -f "${BREWCO_DIR}/deployment/database/Dockerfile" \
   "${BREWCO_DIR}/deployment/database/"
@@ -115,6 +98,7 @@ log "Database image built."
 # --------------------------------------------------
 log "=== BUILD: Laravel Backend ==="
 docker build \
+  --no-cache \
   -t "${IMAGE_BACKEND}:latest" \
   -f "${BREWCO_DIR}/deployment/backend/Dockerfile" \
   "${BREWCO_DIR}/"
@@ -125,6 +109,7 @@ log "Backend image built."
 # --------------------------------------------------
 log "=== BUILD: React Frontend ==="
 docker build \
+  --no-cache \
   --build-arg VITE_API_URL="${VITE_API_URL}" \
   -t "${IMAGE_FRONTEND}:latest" \
   -f "${BREWCO_DIR}/deployment/frontend/Dockerfile" \
@@ -148,86 +133,36 @@ docker image prune -f
 log "Local images removed."
 
 # --------------------------------------------------
-# 10. Docker network and volume
+# 10. Deploy to Kubernetes
 # --------------------------------------------------
-log "Creating Docker network and volume..."
-docker network inspect brewco-net >/dev/null 2>&1 \
-  || docker network create brewco-net
-docker volume  inspect brewco-mysql-data >/dev/null 2>&1 \
-  || docker volume create brewco-mysql-data
-log "Network 'brewco-net' and volume 'brewco-mysql-data' ready."
+log "=== DEPLOY: Applying Kubernetes manifests ==="
+kubectl apply -f "${BREWCO_DIR}/deployment/brewco.yml"
+log "Manifests applied."
 
-# --------------------------------------------------
-# 11. Stop and remove previous containers
-# --------------------------------------------------
-log "Cleaning previous containers (if they exist)..."
-for name in brewco-database brewco-backend brewco-frontend; do
-  if docker ps -a --format '{{.Names}}' | grep -q "^${name}$"; then
-    warn "  Stopping and removing: ${name}"
-    docker stop "${name}" && docker rm "${name}"
-  fi
-done
+# Restart deployments to force pull of new images
+log "Restarting deployments to pull latest images..."
+kubectl rollout restart deployment/brewco-backend  -n "${NAMESPACE}" 2>/dev/null || true
+kubectl rollout restart deployment/brewco-frontend -n "${NAMESPACE}" 2>/dev/null || true
+kubectl rollout restart statefulset/brewco-database -n "${NAMESPACE}" 2>/dev/null || true
+
+# Wait for rollout
+log "Waiting for deployments to be ready..."
+kubectl rollout status deployment/brewco-frontend -n "${NAMESPACE}" --timeout=120s || warn "Frontend rollout timeout"
+kubectl rollout status deployment/brewco-backend  -n "${NAMESPACE}" --timeout=120s || warn "Backend rollout timeout"
 
 # --------------------------------------------------
-# 12. Pull from Harbor and create containers
-# --------------------------------------------------
-log "=== PULL from Harbor ==="
-docker pull "${IMAGE_DATABASE}:latest"
-docker pull "${IMAGE_BACKEND}:latest"
-docker pull "${IMAGE_FRONTEND}:latest"
-
-log "=== Containers: Creating ==="
-
-# --- Database ---
-docker run -d \
-  --name brewco-database \
-  --network brewco-net \
-  --restart unless-stopped \
-  -v brewco-mysql-data:/var/lib/mysql \
-  --memory="350Mi" \
-  --memory-reservation="250Mi" \
-  --cpus="0.4" \
-  "${IMAGE_DATABASE}:latest"
-log "  ✓ brewco-database created"
-
-# Wait for MySQL to be ready before starting backend
-log "Waiting for MySQL initialization (20s)..."
-sleep 20
-
-# --- Backend ---
-docker run -d \
-  --name brewco-backend \
-  --network brewco-net \
-  --restart unless-stopped \
-  -p 8000:8000 \
-  --memory="350Mi" \
-  --memory-reservation="250Mi" \
-  --cpus="0.4" \
-  "${IMAGE_BACKEND}:latest"
-log "  ✓ brewco-backend created"
-
-# --- Frontend ---
-docker run -d \
-  --name brewco-frontend \
-  --network brewco-net \
-  --restart unless-stopped \
-  -p 80:80 \
-  --memory="250Mi" \
-  --memory-reservation="150Mi" \
-  --cpus="0.2" \
-  "${IMAGE_FRONTEND}:latest"
-log "  ✓ brewco-frontend created"
-
-# --------------------------------------------------
-# 13. Final status
+# 11. Final status
 # --------------------------------------------------
 echo ""
 log "============================================="
 log " SETUP COMPLETED"
 log "============================================="
 echo ""
-echo -e "${GREEN}Active containers:${NC}"
-docker ps --filter "name=brewco-" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+echo -e "${GREEN}Kubernetes pods:${NC}"
+kubectl get pods -n "${NAMESPACE}"
+echo ""
+echo -e "${GREEN}Services:${NC}"
+kubectl get services -n "${NAMESPACE}"
 echo ""
 echo -e "${GREEN}Access URLs:${NC}"
 echo "  Frontend : http://grup3.infla.cat/brewco"

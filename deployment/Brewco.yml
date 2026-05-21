@@ -1,0 +1,211 @@
+# =============================================================
+# BrewCo - Kubernetes Deployment
+# Namespace: grup3
+# =============================================================
+
+# -------------------------------------------------------------------
+# Secret Harbor (credentials to pull images from kube0.lacetania.cat)
+# -------------------------------------------------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: credencials-kube0
+  namespace: grup3
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJrdWJlMC5sYWNldGFuaWEuY2F0Ijp7InVzZXJuYW1lIjoiZ3J1cDMiLCJwYXNzd29yZCI6IkhiRlNlVkxYTE8xIiwiYXV0aCI6IlozSjFjRE02U0dKR1UyVldURmhNVHpFPSJ9fX0=
+---
+# -------------------------------------------------------------------
+# PersistentVolumeClaim - MySQL data
+# -------------------------------------------------------------------
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: brewco-mysql-pvc
+  namespace: grup3
+spec:
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+# -------------------------------------------------------------------
+# StatefulSet - MySQL Database
+# -------------------------------------------------------------------
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: brewco-database
+  namespace: grup3
+spec:
+  serviceName: clusterip-bd
+  replicas: 1
+  selector:
+    matchLabels:
+      app: brewco-database
+      type: backend
+  template:
+    metadata:
+      labels:
+        app: brewco-database
+        type: backend
+    spec:
+      containers:
+        - name: database
+          image: kube0.lacetania.cat/grup3/databaseg3:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3306
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "200m"
+            limits:
+              memory: "350Mi"
+              cpu: "400m"
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: brewco-mysql-pvc
+      imagePullSecrets:
+        - name: credencials-kube0
+---
+# -------------------------------------------------------------------
+# ClusterIP - MySQL Database
+# -------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-bd
+  namespace: grup3
+spec:
+  type: ClusterIP
+  selector:
+    app: brewco-database
+    type: backend
+  ports:
+    - port: 3306
+      targetPort: 3306
+  clusterIP: 10.96.3.152
+---
+# -------------------------------------------------------------------
+# Deployment - Laravel Backend
+# -------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brewco-backend
+  namespace: grup3
+  labels:
+    app: brewco-backend
+    type: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: brewco-backend
+      type: backend
+  template:
+    metadata:
+      labels:
+        app: brewco-backend
+        type: backend
+    spec:
+      containers:
+        - name: backend
+          image: kube0.lacetania.cat/grup3/backendg3:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+              name: backend-port
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "200m"
+            limits:
+              memory: "350Mi"
+              cpu: "400m"
+      imagePullSecrets:
+        - name: credencials-kube0
+---
+# -------------------------------------------------------------------
+# ClusterIP - Laravel Backend
+# -------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-node
+  namespace: grup3
+spec:
+  type: ClusterIP
+  selector:
+    app: brewco-backend
+    type: backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+  clusterIP: 10.96.3.151
+---
+# -------------------------------------------------------------------
+# Deployment - React Frontend (Apache)
+# -------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brewco-frontend
+  namespace: grup3
+  labels:
+    app: brewco-frontend
+    type: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: brewco-frontend
+      type: frontend
+  template:
+    metadata:
+      labels:
+        app: brewco-frontend
+        type: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: kube0.lacetania.cat/grup3/frontendg3:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: frontend-port
+          resources:
+            requests:
+              memory: "150Mi"
+              cpu: "100m"
+            limits:
+              memory: "250Mi"
+              cpu: "200m"
+      imagePullSecrets:
+        - name: credencials-kube0
+---
+# -------------------------------------------------------------------
+# ClusterIP - React Frontend
+# IP 10.96.3.101 is the one the Nginx proxy uses to reach grup3
+# -------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-httpd
+  namespace: grup3
+spec:
+  type: ClusterIP
+  selector:
+    app: brewco-frontend
+    type: frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  clusterIP: 10.96.3.101
