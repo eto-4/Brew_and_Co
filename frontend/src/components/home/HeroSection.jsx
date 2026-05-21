@@ -5,7 +5,7 @@ export default function HeroSection() {
     <section className={heroStyles.section}>
       <div className={heroStyles.imageWrap}>
         <img
-          src="/hero.webp"
+          src={`${import.meta.env.BASE_URL}hero.webp`}
           alt=""
           className={heroStyles.image}
           draggable={false}

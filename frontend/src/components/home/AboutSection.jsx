@@ -15,7 +15,7 @@ export default function AboutSection() {
           </p>
         </div>
         <img
-          src="/about.webp"
+          src={`${import.meta.env.BASE_URL}about.webp`}
           alt=""
           className={aboutStyles.image}
           draggable={false}
