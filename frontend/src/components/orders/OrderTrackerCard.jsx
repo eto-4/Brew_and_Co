@@ -7,20 +7,20 @@ const STEPS = [
   {
     key: 'empaquetant',
     label: 'Empaquetant',
-    icon: `${import.meta.env.BASE_URL}/steps/step-empaquetant.webp`,
-    iconDone: `${import.meta.env.BASE_URL}/steps/step-empaquetant-done.webp`,
+    icon: `${import.meta.env.BASE_URL}steps/step-empaquetant.webp`,
+    iconDone: `${import.meta.env.BASE_URL}steps/step-empaquetant-done.webp`,
   },
   {
     key: 'en_enviament',
     label: 'En enviament',
-    icon: `${import.meta.env.BASE_URL}/steps/step-enviament.webp`,
-    iconDone: `${import.meta.env.BASE_URL}/steps/step-enviament-done.webp`,
+    icon: `${import.meta.env.BASE_URL}steps/step-enviament.webp`,
+    iconDone: `${import.meta.env.BASE_URL}steps/step-enviament-done.webp`,
   },
   {
     key: 'entregada',
     label: 'Entregada',
-    icon: `${import.meta.env.BASE_URL}/steps/step-entregada.webp`,
-    iconDone: `${import.meta.env.BASE_URL}/steps/step-entregada-done.webp`,
+    icon: `${import.meta.env.BASE_URL}steps/step-entregada.webp`,
+    iconDone: `${import.meta.env.BASE_URL}steps/step-entregada-done.webp`,
   },
 ]
 
