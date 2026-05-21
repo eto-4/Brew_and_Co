@@ -7,7 +7,7 @@ import AdminPage from '../pages/AdminPage'
 
 export default function Router() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/brewco">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
