@@ -25,7 +25,7 @@ IMAGE_FRONTEND="${REGISTRY}/${NAMESPACE}/frontendg3"
 IMAGE_BACKEND="${REGISTRY}/${NAMESPACE}/backendg3"
 IMAGE_DATABASE="${REGISTRY}/${NAMESPACE}/databaseg3"
 BREWCO_DIR=~/BrewCo
-VITE_API_URL="http://grup3.infla.cat/brewco/api"
+VITE_API_URL="http://grup3.infla.cat/brewco"
 TARGET="${1:-all}"
 
 # --------------------------------------------------
