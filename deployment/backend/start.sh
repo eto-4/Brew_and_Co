@@ -3,13 +3,16 @@ set -e
 
 echo "==> Waiting for MySQL to be ready..."
 until php -r "
-  \$conn = @mysqli_connect(
-    getenv('DB_HOST'), getenv('DB_USERNAME'),
-    getenv('DB_PASSWORD'), getenv('DB_DATABASE'),
-    (int)getenv('DB_PORT')
-  );
-  if (\$conn) { exit(0); }
-  exit(1);
+  try {
+    new PDO(
+      'mysql:host=' . getenv('DB_HOST') . ';port=' . getenv('DB_PORT') . ';dbname=' . getenv('DB_DATABASE'),
+      getenv('DB_USERNAME'),
+      getenv('DB_PASSWORD')
+    );
+    exit(0);
+  } catch (Exception \$e) {
+    exit(1);
+  }
 "; do
   echo "    MySQL not available yet, retrying in 3s..."
   sleep 3
