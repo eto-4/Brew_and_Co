@@ -9,7 +9,7 @@ ARG VITE_API_URL=http://grup3.infla.cat/brewco/api
 WORKDIR /app
 
 # Copy frontend source code
-COPY . .
+COPY frontend/ .
 
 # Install dependencies
 RUN npm install

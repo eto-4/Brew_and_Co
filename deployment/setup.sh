@@ -117,7 +117,7 @@ log "=== BUILD: Laravel Backend ==="
 docker build \
   -t "${IMAGE_BACKEND}:latest" \
   -f "${BREWCO_DIR}/deployment/backend/Dockerfile" \
-  "${BREWCO_DIR}/backend/"
+  "${BREWCO_DIR}/"
 log "Backend image built."
 
 # --------------------------------------------------
@@ -128,7 +128,7 @@ docker build \
   --build-arg VITE_API_URL="${VITE_API_URL}" \
   -t "${IMAGE_FRONTEND}:latest" \
   -f "${BREWCO_DIR}/deployment/frontend/Dockerfile" \
-  "${BREWCO_DIR}/frontend/"
+  "${BREWCO_DIR}/"
 log "Frontend image built."
 
 # --------------------------------------------------

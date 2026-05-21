@@ -6,7 +6,7 @@ FROM composer:2.7 AS composer-stage
 WORKDIR /app
 
 # Copy backend source code
-COPY . .
+COPY backend/ .
 
 # Install production dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
