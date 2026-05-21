@@ -28,6 +28,9 @@ echo "    MySQL ready."
 echo "==> Running Laravel migrations..."
 php artisan migrate --force
 
+echo "==> Starting Queue Worker..."
+php artisan queue:work --daemon &
+
 echo "==> Starting PHP-FPM in background..."
 php-fpm -D
 
