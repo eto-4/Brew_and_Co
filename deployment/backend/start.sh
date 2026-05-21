@@ -2,12 +2,18 @@
 set -e
 
 echo "==> Waiting for MySQL to be ready..."
+DB_HOST=$(grep ^DB_HOST /var/www/html/.env | cut -d '=' -f2)
+DB_PORT=$(grep ^DB_PORT /var/www/html/.env | cut -d '=' -f2)
+DB_DATABASE=$(grep ^DB_DATABASE /var/www/html/.env | cut -d '=' -f2)
+DB_USERNAME=$(grep ^DB_USERNAME /var/www/html/.env | cut -d '=' -f2)
+DB_PASSWORD=$(grep ^DB_PASSWORD /var/www/html/.env | cut -d '=' -f2)
+
 until php -r "
   try {
     new PDO(
-      'mysql:host=' . getenv('DB_HOST') . ';port=' . getenv('DB_PORT') . ';dbname=' . getenv('DB_DATABASE'),
-      getenv('DB_USERNAME'),
-      getenv('DB_PASSWORD')
+      'mysql:host=${DB_HOST};port=${DB_PORT};dbname=${DB_DATABASE}',
+      '${DB_USERNAME}',
+      '${DB_PASSWORD}'
     );
     exit(0);
   } catch (Exception \$e) {
