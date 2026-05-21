@@ -184,6 +184,9 @@ docker run -d \
   --network brewco-net \
   --restart unless-stopped \
   -v brewco-mysql-data:/var/lib/mysql \
+  --memory="350Mi" \
+  --memory-reservation="250Mi" \
+  --cpus="0.4" \
   "${IMAGE_DATABASE}:latest"
 log "  ✓ brewco-database created"
 
@@ -197,6 +200,9 @@ docker run -d \
   --network brewco-net \
   --restart unless-stopped \
   -p 8000:8000 \
+  --memory="350Mi" \
+  --memory-reservation="250Mi" \
+  --cpus="0.4" \
   "${IMAGE_BACKEND}:latest"
 log "  ✓ brewco-backend created"
 
@@ -206,6 +212,9 @@ docker run -d \
   --network brewco-net \
   --restart unless-stopped \
   -p 80:80 \
+  --memory="250Mi" \
+  --memory-reservation="150Mi" \
+  --cpus="0.2" \
   "${IMAGE_FRONTEND}:latest"
 log "  ✓ brewco-frontend created"
 
