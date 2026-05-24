@@ -4,7 +4,7 @@
     · Aplicació Web de Cafeteria
   </span>
 </h1>
-
+<h2 style="color: #96580d87;">http://grup3.infla.cat/brewco/</h2>
 <h3 style="border-bottom: 1px solid #7d6d5c; color: #9a6935cc;">
   Concepte General
 </h3>
